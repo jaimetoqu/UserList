@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import UserList from './UserList.js';
 import UserForm from './UserForm.js';
+import RandomNumber from './RandomNumber';
 
 
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
   }
 
   handleOnAddUser (event) {
-    // evita que se ejecute su comportamiento por defecto (en este caso que cargue la pagina) 
+    // prevents that the behavior is executed by default (in this case that the page updates) 
     event.preventDefault();
     let user = {
       name: event.target.name.value,
@@ -26,6 +27,11 @@ class App extends Component {
     this.setState({
       users: this.state.users.concat([user])
     });
+  }
+
+  onUpdateNumber () {
+    // to update the component manually (react method)
+    this.forceUpdate();
   }
 
   render() {
@@ -37,6 +43,7 @@ class App extends Component {
         </div>
         <UserList users={this.state.users} />
         <UserForm onAddUser={this.handleOnAddUser.bind(this)} />
+        <RandomNumber updateNumber={this.onUpdateNumber.bind(this)}></RandomNumber>
       </div>
     );
   }
