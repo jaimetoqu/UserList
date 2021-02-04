@@ -10,22 +10,30 @@ import axios from 'axios';
 
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      users: [
-        {id: 1, name: "miguel", email: "test@miguelgomez.io"},
-        {id: 2, name: "test", email: "test@test.es"}
-      ]
-    };
+
+  state = {
+    users: []
   }
+
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     users: [
+  //       {id: 1, name: "miguel", email: "test@miguelgomez.io"},
+  //       {id: 2, name: "test", email: "test@test.es"}
+  //     ]
+  //   };
+  // }
 
   handleOnAddUser (event) {
     // prevents that the behavior is executed by default (in this case that the page updates) 
     event.preventDefault();
+    var idNumber = Math.floor(Math.random() * 6000) + 100;
+    console.log(idNumber);
     let user = {
       name: event.target.name.value,
-      email: event.target.email.value
+      email: event.target.email.value,
+      id: idNumber
     };
     this.setState({
       users: this.state.users.concat([user])
@@ -48,7 +56,13 @@ class App extends Component {
     ReactDOM.findDOMNode(myDiv).style.color = color;
   }
 
+  componentWillUpdate() {
+    console.log(" segundo componentWillUpdate")
+  }
+
   componentDidMount() {
+    console.log("primero componentDidMount")
+
     const apiUrl = 'https://api.github.com/users/hacktivist123/repos';
     fetch(apiUrl)
       .then((response) => response.json())
@@ -59,6 +73,12 @@ class App extends Component {
       // const persons = res.data;
       // this.setState({ persons });
       console.log('Axiosss', response.data);
+      // this.state = {
+      //   users: response.data
+      // };
+      this.setState({
+        users: response.data
+      });
     })
   }
 
