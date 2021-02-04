@@ -6,6 +6,7 @@ import UserForm from './UserForm.js';
 import RandomNumber from './RandomNumber';
 import ReactDOM from 'react-dom';
 import DomColor from './DomColor';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -45,6 +46,20 @@ class App extends Component {
     }
     // finds de id of the html element in this case myDiv and sets the color 
     ReactDOM.findDOMNode(myDiv).style.color = color;
+  }
+
+  componentDidMount() {
+    const apiUrl = 'https://api.github.com/users/hacktivist123/repos';
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => console.log('This is your data', data));
+    
+    axios.get(`https://jsonplaceholder.typicode.com/users`)
+    .then(response => {
+      // const persons = res.data;
+      // this.setState({ persons });
+      console.log('Axiosss', response.data);
+    })
   }
 
   render() {
